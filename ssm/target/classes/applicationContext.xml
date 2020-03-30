@@ -20,7 +20,7 @@
     <!--配置连接池-->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/ssm?useSSL=false&amp;serverTimezone=UTC" />
+        <property name="url" value="jdbc:mysql://localhost:3306/work_db?useSSL=false&amp;serverTimezone=UTC" />
         <property name="username" value="root" />
         <property name="password" value="123456" />
     </bean>
@@ -47,9 +47,9 @@
     </tx:advice>
     <!--AOP 增强-->
     <aop:config>
-        <aop:pointcut id="txAdivceCut" expression="execution(* com.jsu.service.impl.*.*(..))" />
+        <aop:pointcut id="txAdviceCut" expression="execution(* com.jsu.service.impl.*.*(..))" />
         <!--事务切入点-->
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="txAdivceCut"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txAdviceCut"/>
 
     </aop:config>
 </beans>

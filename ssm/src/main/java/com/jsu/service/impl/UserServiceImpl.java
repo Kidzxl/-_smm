@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -21,14 +22,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(User user) {
-        System.out.println("业务层:保存账户");
-        User u1 = new User();
-        u1.setUsername("aaa");
-        u1.setAge(15);
-        u1.setPassword("414");
-        userDao.saveUser(u1);
-        System.out.println(user);
-        userDao.saveUser(user);
+    public int insertUser(User user) {
+        try {
+             userDao.insertUser(user);
+             System.out.println("注册成功:"+user.getId());
+             return user.getId();
+        }catch (Exception e){
+            System.out.println("注册失败");
+        }
+        return 0;
+    }
+
+    @Override
+    public User queryUser(User user) {
+        return userDao.queryUser(user);
     }
 }

@@ -30,6 +30,7 @@ public class TestController {
     public Map testPost(VueTest vueTest){
         System.out.println("post....");
         System.out.println(vueTest);
+        vueTest.setUsername("123");
         Map<String,Object> map = new ConcurrentHashMap<>();
         map.put("code",200);
         map.put("method","post");

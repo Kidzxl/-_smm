@@ -17,6 +17,7 @@
     </bean>
     <!--开启mvc注解支持-->
     <mvc:annotation-driven/>
+    <!--跨站-->
     <mvc:cors>
         <mvc:mapping path="/**"
                      allowed-origins="*"

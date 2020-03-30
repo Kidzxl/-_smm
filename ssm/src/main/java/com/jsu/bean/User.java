@@ -3,10 +3,11 @@ package com.jsu.bean;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private int id;
-    private String username;
-    private String password;
-    private int age;
+   private int id;
+   private String username;
+   private String password;
+   private String email;
+   private String tel;
 
     public int getId() {
         return id;
@@ -32,12 +33,20 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public int getAge() {
-        return age;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 
     @Override
@@ -46,7 +55,8 @@ public class User implements Serializable {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", age=" + age +
+                ", email='" + email + '\'' +
+                ", tel='" + tel + '\'' +
                 '}';
     }
 }

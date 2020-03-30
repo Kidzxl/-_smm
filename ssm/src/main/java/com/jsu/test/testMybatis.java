@@ -37,10 +37,13 @@ public class testMybatis {
         SqlSession sqlSession = factory.openSession();
         UserDao userDao = sqlSession.getMapper(UserDao.class);
         User user = new User();
-        user.setUsername("zclj");
+        user.setUsername("zcl124j");
         user.setPassword("432");
-        user.setAge(15);
-        userDao.saveUser(user);
+        user.setEmail("124");
+        user.setTel("124");
+        System.out.println(user);
+         userDao.insertUser(user);
+        System.out.println(user.getId());
         sqlSession.commit();
         sqlSession.close();
         in.close();
