@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * web 层
@@ -27,8 +29,22 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public Map loginUser(){
-        return null;
+    public Map loginUser( User user){
+        Map<String,Object> map = new ConcurrentHashMap<>();
+        List<MsgMap> list = new CopyOnWriteArrayList<>();
+        User u = userService.queryUser(user);
+        if(u==null){
+            map.put("code",100);
+            map.put("data","not data");
+            map.put("msg","账号或者密码不正确");
+        }else{
+            map.put("code",200);
+            list.add(new MsgMap("user",u));
+//            list.add("token")
+            map.put("data",list);
+            map.put("msg","success");
+        }
+        return map;
     }
 
     @ResponseBody
@@ -37,11 +53,13 @@ public class UserController {
 
         int id = userService.insertUser(user);
         Map<String,Object> map = new ConcurrentHashMap<>();
-        map.put("code",200);
+
         if (id !=0 || (Integer)id ==null){
+            map.put("code",200);
             map.put("data",new MsgMap("id",id));
             map.put("msg","success");
         }else{
+            map.put("code",100);
             map.put("data","not data");
             map.put("msg","failure");
         }
@@ -64,6 +82,7 @@ public class UserController {
     @RequestMapping("/checkUsername")
     public Map checkUsername(User user){
         Map<String,Object> map = new ConcurrentHashMap<>();
+        System.out.println(user);
         User u = userService.queryUser(user);
         map.put("code",200);
         if(u==null){
@@ -75,4 +94,5 @@ public class UserController {
         }
         return map;
     }
+
 }

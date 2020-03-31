@@ -104,6 +104,7 @@
 
         <!-- Javascript -->
         <script src="login/assets/js/jquery-1.11.1.min.js"></script>
+
         <script src="login/assets/bootstrap/js/bootstrap.min.js"></script>
         <script src="login/assets/js/jquery.backstretch.min.js"></script>
         <script src="login/assets/js/scripts.js"></script>
@@ -115,61 +116,55 @@
         <!--开发环境版本，包含了有帮助的命令行警告-->
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <!--<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>-->
+        <script src="login/js/jquery.cookie.js" ></script>
+        <script>
+            window.onload = function () {
+                function sleep(ms) {
+                    return new Promise(resolve => setTimeout(resolve, ms));
+                }
+                async function link(url) {
+                    console.log('Taking a break...');
+                    await sleep(1000);
+                    console.log('Two seconds later');
+                    if($.cookie("user") != null){
+                        window.location.href=url;
+                    }
 
+                }
+                link("index.html");
 
+            }
+        </script>
         <script type="text/javascript">
-
             var login_demo = new Vue({
                 el:"#app",
                 data:{
-                    username:"1241242",
-                    password:"11",
-                    code:"11"
+                    username:"314",
+                    password:"123",
+                    code:""
                 },
                 methods:{
                     login_submit:function () {
                         var d = {
-                            "username":this.username,
+                            "email":this.username,
                             "password":this.password
                         };
                         var that = this;
                         $.ajax({
                             type: "POST",
-                            url: "http://192.168.0.106:80/ssm/test",
+                            url: "http://192.168.0.106:80/ssm/user/login",
                             data:d,
                             success: function(response){
-                                if(response.data.username == "123"){
-                                    console.log("成功")
+                                if(response.code==200){
+                                    $.cookie('user', JSON.stringify(response.data[0]['value']));
+                                    console.log($.cookie('1user'));
+                                    window.location.href="index.html";
                                 }
                             },
                             error:function (XMLHttpRequest, textStatus, errorThrown) {
                                 console.log("服务器失败")
                             }
                         });
-//                axios.get('http://192.168.0.106:80/ssm/test', {
-//                    params: {
-//                        username: that.username,
-//                        password: that.password
-//                    }
-//                }).then(function (response) {
-//                        console.log(response);
-//                    })
-//                    .catch(function (error) {
-//                        console.log(error);
-//                    });
-
-//                axios({
-//                    headers: {
-//                        'Content-Type': 'application/x-www-form-urlencoded'
-//                    },
-//                    method: 'get',
-//                    url: 'http://192.168.0.106:80/ssm/test',
-//                    data: {
-//                        username: that.username,
-//                        password: that.password
-//                    }
-//                });
                     },
                     register_submit:function () {
 

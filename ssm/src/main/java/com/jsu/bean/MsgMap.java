@@ -2,11 +2,11 @@ package com.jsu.bean;
 
 public class MsgMap {
     private String name;
-    private Object obj;
+    private Object value;
 
-    public MsgMap(String name, Object obj) {
+    public MsgMap(String name, Object value) {
         this.name = name;
-        this.obj = obj;
+        this.value = value;
     }
 
     public String getName() {
@@ -17,11 +17,11 @@ public class MsgMap {
         this.name = name;
     }
 
-    public Object getObj() {
-        return obj;
+    public Object getValue() {
+        return value;
     }
 
-    public void setObj(Object obj) {
-        this.obj = obj;
+    public void setValue(Object value) {
+        this.value = value;
     }
 }

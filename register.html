@@ -69,7 +69,9 @@
 			                    	<div class="form-group">
 			                    		<label class="sr-only" for="form-first-name">First name</label>
 			                        	<input type="text" style="width: 80%;" @blur.prevent="checkUsername" v-model="username" name="form-first-name" placeholder="请输入用户名...." class="form-first-name form-control" id="form-first-name">
-			                        	<div>12312</div>
+			                        	<div style="float: right;
+    margin-left: 15px;
+    margin-top: -40px; color:red;">{{check_msg}}</div>
 									</div>
 			                        <div class="form-group">
 
@@ -117,16 +119,16 @@
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 		<script type="text/javascript">
-
             var login_demo = new Vue({
                 el:"#app",
                 data:{
-                    username:"1241242",
+                    username:"",
 					tel:"",
                     password:"",
                     password2:"",
                     email:"",
-                    code:""
+                    code:"",
+					check_msg:"",
                 },
                 methods:{
                     register:function () {
@@ -145,8 +147,8 @@
                             success: function(response){
                                 console.log(response);
                                 if(response.msg == "success"){ //成功的情况
-									alert("登录成功,正在前往首页");
-                        			window.location.href="index.html";
+									alert("注册成功");
+                        			window.location.href="login.html";
 								}
                             },
                             error:function (XMLHttpRequest, textStatus, errorThrown) {
@@ -159,14 +161,18 @@
 						    username:this.username
 						};
                         var that = this;
+
                         $.ajax({
                             type: "GET",
                             url: "http://192.168.0.106:80/ssm/user/checkUsername",  //未完成
                             data:d,
                             success: function(response){
+
                                 console.log(response);
 								if (response.msg == "success"){
-//								    alert("用户名已经存在，请更改一个");
+                                    that.check_msg = "验证不通过";
+								}else{
+                                    that.check_msg = "验证通过";
 								}
                             },
                             error:function (XMLHttpRequest, textStatus, errorThrown) {
@@ -176,7 +182,6 @@
                     }
                 }
             })
-
 		</script>
     </body>
 
