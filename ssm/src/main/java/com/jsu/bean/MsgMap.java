@@ -1,6 +1,8 @@
 package com.jsu.bean;
 
-public class MsgMap {
+import java.io.Serializable;
+
+public class MsgMap implements Serializable {
     private String name;
     private Object value;
 

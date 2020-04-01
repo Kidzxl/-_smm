@@ -10,10 +10,10 @@
 
         <!-- CSS -->
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-        <link rel="stylesheet" href="login/assets/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="login/assets/font-awesome/css/font-awesome.min.css">
-		<link rel="stylesheet" href="login/assets/css/form-elements.css">
-        <link rel="stylesheet" href="login/assets/css/style.css">
+        <link rel="stylesheet" href="static/login/assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="static/login/assets/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="static/login/assets/css/form-elements.css">
+        <link rel="stylesheet" href="static/login/assets/css/style.css">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,11 +23,11 @@
         <![endif]-->
 
         <!-- Favicon and touch icons -->
-        <link rel="shortcut icon" href="login/assets/ico/favicon.png">
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="login/assets/ico/apple-touch-icon-144-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="login/assets/ico/apple-touch-icon-114-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="login/assets/ico/apple-touch-icon-72-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" href="login/assets/ico/apple-touch-icon-57-precomposed.png">
+        <link rel="shortcut icon" href="static/login/assets/ico/favicon.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="static/login/assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="static/login/assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="static/login/assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="static/login/assets/ico/apple-touch-icon-57-precomposed.png">
 
     </head>
 
@@ -103,20 +103,20 @@
 
 
         <!-- Javascript -->
-        <script src="login/assets/js/jquery-1.11.1.min.js"></script>
+        <script src="static/login/assets/js/jquery-1.11.1.min.js"></script>
 
-        <script src="login/assets/bootstrap/js/bootstrap.min.js"></script>
-        <script src="login/assets/js/jquery.backstretch.min.js"></script>
-        <script src="login/assets/js/scripts.js"></script>
+        <script src="static/login/assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="static/login/assets/js/jquery.backstretch.min.js"></script>
+        <script src="static/login/assets/js/scripts.js"></script>
         
         <!--[if lt IE 10]>
-            <script src="login/assets/js/placeholder.js"></script>
+        <script src="static/login/assets/js/placeholder.js"></script>
         <![endif]-->
 
         <!--开发环境版本，包含了有帮助的命令行警告-->
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="login/js/jquery.cookie.js" ></script>
+        <script src="static/login/js/jquery.cookie.js" ></script>
         <script>
             window.onload = function () {
                 function sleep(ms) {
@@ -126,7 +126,9 @@
                     console.log('Taking a break...');
                     await sleep(1000);
                     console.log('Two seconds later');
-                    if($.cookie("user") != null){
+                    console.log($.cookie("user"));
+                    if(!$.cookie("user")){
+                        alert($.cookie("user"));
                         window.location.href=url;
                     }
 
@@ -139,14 +141,14 @@
             var login_demo = new Vue({
                 el:"#app",
                 data:{
-                    username:"314",
+                    username:"123",
                     password:"123",
                     code:""
                 },
                 methods:{
                     login_submit:function () {
                         var d = {
-                            "email":this.username,
+                            "username":this.username,
                             "password":this.password
                         };
                         var that = this;

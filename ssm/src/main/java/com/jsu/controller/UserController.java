@@ -54,7 +54,7 @@ public class UserController {
         int id = userService.insertUser(user);
         Map<String,Object> map = new ConcurrentHashMap<>();
 
-        if (id !=0 || (Integer)id ==null){
+        if (id !=0 ){
             map.put("code",200);
             map.put("data",new MsgMap("id",id));
             map.put("msg","success");
@@ -84,11 +84,12 @@ public class UserController {
         Map<String,Object> map = new ConcurrentHashMap<>();
         System.out.println(user);
         User u = userService.queryUser(user);
-        map.put("code",200);
         if(u==null){
+            map.put("code",100);
             map.put("data","not data");
             map.put("msg","failure");
         }else{
+            map.put("code",200);
             map.put("data",new MsgMap("uid",u.getId()));
             map.put("msg","success");
         }
