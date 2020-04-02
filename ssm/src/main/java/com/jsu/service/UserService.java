@@ -14,4 +14,7 @@ public interface UserService {
 
     //查询某个用户
     public User queryUser(User user);
+
+//    更新用户
+    public void updateUser(User user);
 }

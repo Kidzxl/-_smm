@@ -37,4 +37,8 @@ public class UserServiceImpl implements UserService {
     public User queryUser(User user) {
         return userDao.queryUser(user);
     }
+
+    public void updateUser(User user) {
+        userDao.updateUser(user);
+    }
 }
