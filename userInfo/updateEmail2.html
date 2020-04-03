@@ -79,11 +79,11 @@
 			
 		</div>-->
 		<div style="background-color: #F8F8F8;padding-top: 40px;">
-		<div class="am-g" >
+		<div class="am-g" id="user-info">
 			<div class="logo"> <img src="../static/img/logo.png" style="    float: left" />
 				<p style="font-size: 16px;color: #3d3d3d;margin-left: 16px;font-weight: bold;margin-top: 20px;    float: left">修改邮箱</p>
 			</div>
-			<div style="width: 1200px;margin: 0 auto;font-size: 12px;margin-top: -38px;"> <span style="float: right;color: #333333;">您好,shi******0<span style="margin-left: 20px;margin-right: 20px;">|</span>退出<span style="margin-left: 20px;margin-right: 20px;">|</span>我的买啦</span>
+			<div style="width: 1200px;margin: 0 auto;font-size: 12px;margin-top: -38px;"> <span style="float: right;color: #333333;">您好,{{user.username}}<span style="margin-left: 20px;margin-right: 20px;">|</span>退出<span style="margin-left: 20px;margin-right: 20px;">|</span>我的买啦</span>
 			</div>
 		</div>
 		</div>
@@ -112,23 +112,23 @@
 						</li>
 					</ul>
 					<!--输入账户名-->
-					<div class="am-tabs-bd" style="margin-left: 300px;">
+					<div class="am-tabs-bd" style="margin-left: 300px;" id="update">
 						<div data-tab-panel-0 class="am-tab-panel am-active" style="margin-top: 20px;font-size: 14px;">
 							<div class="am-g" style="margin-top: 20px;margin-left: 55px;">
 								<span >输入新的邮箱:</span>
-								<input class="am-form-field" type="text" style="width: 285px;height: 45px;margin-left: 22px;" />
+								<input v-model="newEmail" class="am-form-field" type="email" style="width: 285px;height: 45px;margin-left: 22px;" />
 							</div>
-							<div class="am-g" style="margin-top: 20px;margin-left:100px;">
-								<input type="button" style="width: 114px;height: 47px;margin-left: 70px; background-color: #C2C2C2;color: #fff;border: 0px;border-radius: 5px;"  value="免费获取验证码"/>
+							<div class="am-g" style="margin-top: 20px;margin-left:125px;">
+								<button id="bnt" @click="checkEmailAndGetCode" style="width: 114px;height: 47px;margin-left: 70px; background-color:dodgerblue;color: #fff;border: 0px;border-radius: 5px;" >获取验证码</button>
 							</div>
 							
 							<div class="am-g" style="margin-top: 20px;margin-left: 100px;">
 								<span >验证码:</span>
-								<input class="am-form-field" type="text" style="width: 285px;height: 45px;margin-left: 15px;padding-left: 10px;" placeholder="请入验证码" />
+								<input v-model="code" class="am-form-field" type="text" style="width: 285px;height: 45px;margin-left: 15px;padding-left: 10px;" placeholder="请入验证码" />
 							</div>
 							<div class="am-g" style="margin-top: 30px;margin-left: 165px;">
-								<button type="button" class="am-btn am-btn-warning" style="width: 265px;height: 50px;font-size: 16px;border: 1px rgba(187, 187, 187, 0.5)B solid;margin: 0 auto;border-radius: 5px;">
-									<a href="updateEmail3.html">确定</a>
+								<button type="button" @click="submit" class="am-btn am-btn-warning" style="width: 265px;height: 50px;font-size: 16px;border: 1px rgba(187, 187, 187, 0.5) solid;margin: 0 auto;border-radius: 5px;">
+									<span class="btn" >确定</span>
 								</button>
 							</div>
 							<div class="am-g" style="padding-top:40px;padding-left:50px;border: 1px rgba(241,161,69, 0.18) solid;   margin-left:0px;margin-top:50px;height: 169px;width: 718px;background-color: #FEFBEE;">
@@ -157,6 +157,122 @@
 			</div>
 		</div>
 		</div>
+
+		<!--Vue-->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script src="../static/login/js/jquery.cookie.js" ></script>
+		<script>
+            var  u =null ;
+            if ($.cookie("user")!=null){
+                u = JSON.parse($.cookie("user"));
+            }
+            console.log(u);
+            var userInfo = new Vue({
+                el:"#user-info",
+                data:{
+                    user:u,
+                },
+                methods:{
+                    test:function () {
+                        console.log(this.user)
+                    }
+                }
+            });
+            var updateEmail = new Vue({
+                el:"#update",
+                data:{
+                    user:u,
+                    newEmail:"",
+                    code:"",
+                },
+                methods:{
+                    checkEmailAndGetCode:function () {
+                        alert(this.oldEmail);
+                        var time = 3;
+                        $("#bnt").attr("disabled","disabled");
+                        $("#bnt").css("background-color","rgb(178,158,158)");
+                        var that = this;
+                        $.ajax({
+                            type: "GET",
+                            url: "http://192.168.0.106:80/ssm/userInfo/getCode",  //未完成
+                            data:{email:that.newEmail},
+                            success: function(response){
+                                console.log(response);
+                                if (response.code == 200){
+                                    var code = response.data.value;
+                                    var date = new Date();
+                                    date.setTime(date.getTime() + (60 * 1000));
+                                    $.cookie('code', code, { expires: date });
+                                }else{
+                                    console.log("获取验证码出错")
+                                }
+                            },
+                            error:function (XMLHttpRequest, textStatus, errorThrown) {
+                                console.log("服务器失败")
+                            }
+                        });
+                        var time = 30;
+                        var interval= setInterval(()=>{
+                            if(time <=0 ){
+                                $("#bnt").attr("disabled",false);
+                                $("#bnt").css("background-color","dodgerblue");
+                                $("#bnt").html("获取验证码");
+                                time = 30;
+                                clearInterval(interval);
+                            }else{
+                                $("#bnt").attr("disabled",true);
+                                $("#bnt").html("重新获取("+time+")");
+                                time--;
+                            }
+                        },1000);
+                    },
+                    submit:function () {
+                        var userCode = this.code;
+                        var code = $.cookie("code");
+                        if(!code){
+                            alert("请先获取验证码");
+                            return ;
+                        }
+                        if(userCode.length==0 || userCode==""|| !userCode){
+                            alert("请输入验证码");
+                            return ;
+                        }
+                       if(userCode != code){
+                            alert("验证码错误，请重新输入");
+                            this.code = "";
+                        }else{
+                            var date = new Date();
+                            date.setTime(date.getTime() + (0 * 1000));
+                            $.cookie("code",null,{ expires: date });
+                            var that = this;
+                            that.user.email = this.newEmail;
+                            console.log(that.user);
+                            $.ajax({
+                                type: "POST",
+                                url: "http://192.168.0.106:80/ssm/userInfo/updateEmail",
+                                data:that.user,
+//								dataType:json,
+                                success: function(response){
+                                    console.log(response);
+                                    if (response.code == 200){
+                                        $.cookie("user",response.data.value);
+                                        u = $.cookie("user");
+                                        user = u;
+                                    }else{
+                                        console.log("获取验证码出错")
+                                    }
+                                },
+                                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                                    console.log("服务器失败")
+                                }
+                            });
+                            window.location.href= "updateEmail3.html";
+                        }
+                    }
+                }
+            })
+		</script>
 	</body>
 
 </html>

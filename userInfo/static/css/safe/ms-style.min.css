@@ -360,7 +360,7 @@ body {
 .ms-logo .ms-head-logo {
 	display: block;
 	height: 28px;
-	background: url(images/ms-logo.png);
+	background: url(../../img/logo.png);
 	background-repeat: no-repeat;
 	background-position: center left
 }

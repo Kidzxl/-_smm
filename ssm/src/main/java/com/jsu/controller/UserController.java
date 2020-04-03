@@ -54,7 +54,7 @@ public class UserController {
         int id = userService.insertUser(user);
         Map<String,Object> map = new ConcurrentHashMap<>();
 
-        if (id !=0 ){
+        if (id !=0 || (Integer)id ==null){
             map.put("code",200);
             map.put("data",new MsgMap("id",id));
             map.put("msg","success");

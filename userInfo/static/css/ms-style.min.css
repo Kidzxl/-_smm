@@ -404,7 +404,6 @@ body {
 	width: 8px;
 	height: 4px;
 	_font-size: 0;
-	background: url(images/icon-nameInfo.png?v=2015060900);
 	background-repeat: no-repeat;
 	background-position: 0 -52px
 }
@@ -574,8 +573,7 @@ body {
 	left: 15px;
 	width: 10px;
 	height: 6px;
-	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAMAAADNLv/0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADxQTFRF/+Su/eOv/+St/uSw/v7++vr6/f39//3q/+Os/+Wx/+Wy//zp//zo+/v7//vl//vm/+Ww/+Gf///w////dRRuEwAAADtJREFUeNokxskNwDAMxEDlPm1rl/33GgHhhxNAuxfYCFhTmthbMTS6rjqzXrsriVOPq6EMHfbvT4ABAG/WA4FMMyQcAAAAAElFTkSuQmCC);
-	*background: url(images/icon-nameInfo.png?v=2015060900) -39px -58px
+
 }
 
 .info-member .grow-num {
@@ -664,7 +662,7 @@ body {
 }
 
 .manage-addr i {
-	background: url(images/addr-icon.png) no-repeat 0 0
+	/*background: url(../img/) no-repeat 0 0*/
 }
 
 /*.info-safety .unbind-phone i {
@@ -703,7 +701,7 @@ body {
 	overflow: hidden;
 	width: 160px;
 	background: #FFF;
-	background-image: url(images/menu-treeNeck.png);
+	/*background-image: url(images/menu-treeNeck.png);*/
 	background-position: center top;
 	background-repeat: repeat-x;
 	box-shadow: 0 2px 5px #e3e3e3, -1px 2px 5px #e3e3e3;
@@ -821,7 +819,7 @@ body {
 	display: block;
 	width: 9px;
 	height: 9px;
-	background: url(images/icon-nameInfo.png?v=2015060900);
+	/*background: url(images/icon-nameInfo.png?v=2015060900);*/
 	background-repeat: no-repeat;
 	cursor: pointer
 }
@@ -940,7 +938,7 @@ body {
 	display: block;
 	width: 40px;
 	height: 37px;
-	background: url(images/cus_manager.png) no-repeat;
+	/*background: url(images/cus_manager.png) no-repeat;*/
 	background-position: 0 0;
 	cursor: pointer
 }
@@ -977,7 +975,7 @@ body {
 	left: 118px;
 	width: 24px;
 	height: 13px;
-	background: url(images/cus_manager.png) no-repeat;
+	/*background: url(images/cus_manager.png) no-repeat;*/
 	background-position: -42px -38px
 }
 
@@ -987,7 +985,7 @@ body {
 	right: 0;
 	width: 19px;
 	height: 19px;
-	background: url(images/cus_manager.png) no-repeat;
+	/*background: url(images/cus_manager.png) no-repeat;*/
 	background-position: -42px 0;
 	cursor: pointer
 }
@@ -1000,7 +998,7 @@ body {
 	float: left;
 	width: 15px;
 	height: 16px;
-	background: url(images/cus_manager.png) no-repeat
+	/*background: url(images/cus_manager.png) no-repeat*/
 }
 
 .manager-info .info span {
@@ -1062,7 +1060,7 @@ body {
 	height: 12px;
 	width: 12px;
 	line-height: 12px;
-	background: url(images/icon-nameInfo.png?v=2015060900) no-repeat -27px -68px;
+	/*background: url(images/icon-nameInfo.png?v=2015060900) no-repeat -27px -68px;*/
 	z-index: 20
 }
 
@@ -1147,7 +1145,7 @@ body {
 	left: 80px;
 	width: 187px;
 	height: 165px;
-	background: url(images/rxf-tip.png) no-repeat;
+	/*background: url(images/rxf-tip.png) no-repeat;*/
 	z-index: 13
 }
 
@@ -1190,7 +1188,7 @@ body {
 	height: 13px;
 	vertical-align: middle;
 	margin-left: -18px;
-	background: url(images/side-icon-sprite.png) no-repeat 0 0
+	/*background: url(images/side-icon-sprite.png) no-repeat 0 0*/
 }
 
 .side-order-center {

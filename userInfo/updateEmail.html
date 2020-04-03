@@ -105,11 +105,11 @@
 
 							<div class="am-g" style="margin-top: 20px;margin-left: 150px;">
 								<span >验证码:</span>
-								<input class="am-form-field" type="text" style="width: 285px;height: 45px;margin-top:15px;margin-left: 15px;padding-left: 10px;" placeholder="请入验证码" />
+								<input v-model="code" class="am-form-field" type="text" style="width: 285px;height: 45px;margin-top:15px;margin-left: 15px;padding-left: 10px;" placeholder="请入验证码" />
 							</div>
 							<div class="am-g" style="margin-top: 30px;margin-left: 165px;">
-								<button type="button" class="am-btn am-btn-warning" style="width: 265px;height: 50px;font-size: 16px;border: 1px rgba(187, 187, 187, 0.5) solid;margin: 0 auto;border-radius: 5px;">
-									<a href="updateEmail2.html">确定</a>
+								<button type="button" @click="submit" class="am-btn am-btn-warning" style="width: 265px;height: 50px;font-size: 16px;border: 1px rgba(187, 187, 187, 0.5) solid;margin: 0 auto;border-radius: 5px;">
+									<span class="btn" >确定</span>
 								</button>
 							</div>
 							<div class="am-g" style="padding-top:40px;padding-left:50px;border: 1px rgba(241,161,69, 0.18) solid;   margin-left:0px;margin-top:50px;height: 169px;width: 718px;background-color: #FEFBEE;">
@@ -165,6 +165,7 @@
 				data:{
 				    user:u,
 					oldEmail:u.email,
+					code:"",
 				},
 				methods:{
                     checkEmailAndGetCode:function () {
@@ -206,6 +207,27 @@
                                 time--;
                             }
 						},1000);
+                    },
+                    submit:function () {
+                        var userCode = this.code;
+                        var code = $.cookie("code");
+                        if(!code){
+                            alert("请先获取验证码");
+							return ;
+						}
+						if(userCode.length==0 || userCode==""|| !userCode){
+                            alert("请输入验证码");
+                            return ;
+						}
+						if(userCode != code){
+						    alert("验证码错误，请重新输入");
+						    this.code = "";
+						}else{
+                            var date = new Date();
+                            date.setTime(date.getTime() + (0 * 1000));
+						    $.cookie("code",null,{ expires: date });
+                            window.location.href= "updateEmail2.html";
+						}
                     }
 				}
 			})

@@ -105,6 +105,7 @@
         <!-- Javascript -->
         <script src="static/login/assets/js/jquery-1.11.1.min.js"></script>
 
+
         <script src="static/login/assets/bootstrap/js/bootstrap.min.js"></script>
         <script src="static/login/assets/js/jquery.backstretch.min.js"></script>
         <script src="static/login/assets/js/scripts.js"></script>
@@ -127,7 +128,7 @@
                     await sleep(1000);
                     console.log('Two seconds later');
                     console.log($.cookie("user"));
-                    if(!$.cookie("user")){
+                    if($.cookie("user")){
                         alert($.cookie("user"));
                         window.location.href=url;
                     }
