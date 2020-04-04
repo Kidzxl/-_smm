@@ -422,6 +422,7 @@
 }
 
 .controls .authCode {
+	display: inline-block;
 	margin: 0 2px;
 	border: 1px solid #ddd;
 	vertical-align: top

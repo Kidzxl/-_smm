@@ -3342,31 +3342,3 @@ function StringBuffer(str) {
         return str.reverse().join('');
     };
 }
-var address = new Vue({
-    el:"#address",
-    data:{
-        sf:"",
-        cs:"",
-        qx:"",
-    },
-    methods:{
-        test:function(){
-            var that = this;
-            $.each(cityJson,
-                function(i, val) {
-                    if (val.item_code == sf ) {
-                        that.sf = val.item_value;
-                    }
-                    if (val.item_code == cs ) {
-                        that.cs = val.item_value;
-                    }
-                    if (val.item_code == qx ) {
-                        that.qx = val.item_value;
-                    }
-                });
-            alert(that.sf);
-            alert(that.cs);
-            alert(that.cs);
-        }
-    }
-})

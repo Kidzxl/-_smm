@@ -176,7 +176,7 @@
 						var that = this;
                         $.ajax({
                             type: "GET",
-                            url: "http://192.168.0.106:80/ssm/userInfo/getCode",  //未完成
+                            url: "http://192.168.0.106:80/ssm/user/getCode",
                             data:{email:that.oldEmail},
                             success: function(response){
                                 console.log(response);

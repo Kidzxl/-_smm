@@ -3246,23 +3246,86 @@ cityJson = [
     {"item_code":"659004","item_name":"五家渠市"}
 ];
 
+
+//生成验证码的方法
+function createCode(length) {
+
+    return code;
+}
+
 var app = new Vue({
-    el:"#address",
+    el:"#userdetail",
     data:{
+        name:"",
+        nickname:"",
+        sex:"",
+        inputCode:"",
         sf:-1,
         cs:-1,
         qx:-1,
+        code:"",
+    },
+    mounted:function(){
+        this.createCode(4);
     },
     methods:{
-        test:function(){
-            alert(1);
+        submit:function(){
+            var that = this;
+            var data = {address_sf:-1,address_cs:-1,address_qx:-1};
             $.each(cityJson,
                 function(i, val) {
-                    if (val.item_code == this.sf) {
-                       alert(val.item_value);
+                    if (val.item_code == that.sf) {
+                       data.address_sf = val.item_name;
+                    }
+                    if (val.item_code == that.cs) {
+                        data.address_cs = val.item_name;
+                    }
+                    if (val.item_code == that.qx) {
+                        data.address_qx = val.item_name;
                     }
                 });
-            alert(1);
+            this.sex = this.getSex();
+            data.uid = JSON.parse($.cookie("user")).id;
+            data.name=this.name;
+            data.nickname=this.nickname;
+            data.sex = this.sex;
+            $.ajax({
+                type: "POST",
+                url: "http://192.168.0.106:80/ssm/userInfo/updateUserInfo",
+                data:data,
+                success: function(response){
+                    console.log(response);
+                    if (response.code == 200){
+                        alert(1);
+                    }else{
+                        console.log("获取验证码出错")
+                    }
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("服务器失败")
+                }
+            })
+            console.log(data);
+        },
+        createCode:function(length){
+            this.code = "";
+            var codeLength = parseInt(length); //验证码的长度
+            var checkCode = document.getElementById("checkCode");
+            ////所有候选组成验证码的字符，当然也可以用中文的
+            var codeChars = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+                'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+            //循环组成验证码的字符串
+            for (var i = 0; i < codeLength; i++) {
+                //获取随机验证码下标
+                var charNum = Math.floor(Math.random() * 62);
+                //组合成指定字符验证码
+                this.code += codeChars[charNum];
+            }
+        },
+        getSex:function () {
+            item = $('input[name=sex]:checked').val();
+            return item;
         }
     }
 })

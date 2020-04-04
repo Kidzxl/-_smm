@@ -195,7 +195,7 @@
                         var that = this;
                         $.ajax({
                             type: "GET",
-                            url: "http://192.168.0.106:80/ssm/userInfo/getCode",  //未完成
+                            url: "http://192.168.0.106:80/ssm/user/getCode",  //未完成
                             data:{email:that.newEmail},
                             success: function(response){
                                 console.log(response);
@@ -250,7 +250,7 @@
                             console.log(that.user);
                             $.ajax({
                                 type: "POST",
-                                url: "http://192.168.0.106:80/ssm/userInfo/updateEmail",
+                                url: "http://192.168.0.106:80/ssm/user/updateEmail",
                                 data:that.user,
 //								dataType:json,
                                 success: function(response){

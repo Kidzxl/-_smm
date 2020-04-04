@@ -2,6 +2,8 @@ package com.jsu.controller;
 
 import com.jsu.bean.MsgMap;
 import com.jsu.bean.User;
+import com.jsu.bean.UserInfo;
+import com.jsu.service.UserInfoService;
 import com.jsu.service.UserService;
 import com.jsu.util.CheckAccountUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,41 +23,24 @@ import java.util.concurrent.ConcurrentHashMap;
 public class InfoUserController {
 
     @Autowired
-    public UserService userService;
+    public UserInfoService userInfoService;
 
-    @RequestMapping("/getCode")
+
     @ResponseBody
-    public Map getCode(String email){
-        Map<String,Object>  map = new HashMap<>();
-        String code = CheckAccountUtil.sendEmail(email);
-        if(code==null){
+    @RequestMapping("/updateUserInfo")
+    public Map updateUserInfo(UserInfo userInfo){
+        System.out.println(userInfo);
+        HashMap<String, Object> map = new HashMap<>();
+        boolean b = userInfoService.updateUserInfo(userInfo);
+        if(!b){
             map.put("code",100);
             map.put("data","not data");
             map.put("msg","failure");
         }else{
             map.put("code",200);
-            map.put("data",new MsgMap("code",code));
+            map.put("data","not data");
             map.put("msg","success");
         }
         return map;
-    }
-
-    @ResponseBody
-    @RequestMapping("/updateEmail")
-    public Map updateEmail(User user) {
-        Map<String, Object> map = new HashMap<>();
-        try {
-            userService.updateUser(user);
-            User u = userService.queryUser(user);
-            map.put("code", 200);
-            map.put("data", new MsgMap("user", u));
-            map.put("msg", "success");
-        } catch (Exception e) {
-            map.put("code", 100);
-            map.put("data", "not data");
-            map.put("msg", "failure");
-        } finally {
-            return map;
-        }
     }
 }
