@@ -1,0 +1,341 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<!--<script type="text/javascript" src="static/js/safe/aywmq_qt.js" ></script>-->
+		<!--<script type="text/javascript" src="static/js/safe/da_opt.js" ></script>-->
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<script type="text/javascript" src="static/js/jquery-1.9.1.min.js"></script>
+		<link rel="stylesheet" href="static/css/safe/css.css" />
+		<!--<link rel="stylesheet" href="static/css/safe/common.min.css" />-->
+		<link rel="stylesheet" href="static/css/safe/ms-style.min.css" />
+		<link rel="stylesheet" href="static/css/safe/personal_member.min.css" />
+		<link rel="stylesheet" href="static/css/safe/Snaddress.min.css" />
+		<link rel="stylesheet" href="static/css/zpwd/sui.css" />
+		<!--<script type="text/javascript" src="static/js/sui.js" ></script>-->
+		<script src="static/js/address.js" ></script>
+	</head>
+	<style>
+		a{
+			color: #000000;
+		}
+		.sui-table th, .sui-table td {
+    padding: 6px 8px;
+    line-height: 18px;
+    text-align: left;
+    vertical-align: middle;
+    border-top: 1px solid #e6e6e6;
+    font-size: 14px;
+    color: #333333;
+}
+	</style>
+	<body class="ms-body">
+		<div id="" class="ng-top-banner"></div>
+
+		<header class="ms-header ms-header-inner ms-head-position">
+			<article class="ms-header-menu">
+				<style type="text/css">
+					.nav-manage .list-nav-manage {
+						position: absolute;
+						padding: 15px 4px 10px 15px;
+						left: 0;
+						top: -15px;
+						width: 90px;
+						background: #FFF;
+						box-shadow: 1px 1px 2px #e3e3e3, -1px 1px 2px #e3e3e3;
+						z-index: 10;
+					}
+					
+					.ms-nav li {
+						float: left;
+						position: relative;
+						padding: 0 20px;
+						height: 44px;
+						font: 14px/26px "Microsoft YaHei";
+						color: #FFF;
+						cursor: pointer;
+						z-index: 10;
+					}
+					.titles{
+						font-size: 12px;
+						color: #333333;
+						/*font-weight: bold;*/
+					}
+					h3 {
+					    margin: 0px 0;
+					    font-weight: bold;
+					    font-size: 14px;
+					    line-height: 18px;
+					    color: inherit;
+					    text-rendering: optimizelegibility;
+					}
+				</style>
+				<div class="header-menu">
+					<div class="ms-logo">
+						<a class="ms-head-logo"  name="Myyigou_index_none_daohangLogo"><span style="font-size: 30px;color: #fff;font-weight: bold;    line-height: 28px;;">我的买啦</span></a>
+						
+					</div>
+					<nav class="ms-nav">
+						<ul>
+							<li class=""><a href="" data-url="" >首页</a><i class="nav-arrow"></i></li>
+							<li class="nav-manage selected">
+								<a href="" data-url="" >账户管理<em></em></a><i class="nav-arrow"></i>
+								<div class="list-nav-manage " hidden="">
+									<p class="nav-mge-hover">账户管理<em></em></p>
+									<p><a >个人资料</a></p>
+									<p><a >安全设置</a></p>
+									<p><a >账号绑定</a></p>
+									<p><a >地址管理</a></p>
+								</div>
+							</li>
+							<li class="ms-nav-msg"><a >消息</a><i class="nav-arrow"></i></li>
+						</ul>
+						<div class="ms-search">
+							<form >
+								<input id="" type="text" value="">
+									<a id="" href=""></a>
+							</form>
+						</div>
+					</nav>
+				</div>
+
+			</article>
+
+			<article class="ms-useinfo">
+				<div class="header-useinfo" id="">
+					<div class="ms-avatar">
+						<div class="useinfo-avatar">
+							<img src="static/img/头像.png">
+							<div class="edit-avatar"></div>
+							<a class="text-edit-avatar" >修改</a>
+						</div>
+						<a >sunshine</a>
+					</div>
+
+					<div class="ms-name-info">
+						<div class="link-myinfo">
+							<a >我的编号:99653</a>
+						</div>
+						<div class="info-member">
+							<span class="name-member member-1">
+        				 <i></i><a target="_blank" >注册会员</a></span>
+        				 <span style="margin-left: 20px;">
+        				 <a target="_blank" >我的资料</a></span>
+						</div>
+						<div class="info-safety">
+							<span class="safety-lv lv-3">
+        				<a >安全等级：<span>中</span></a>
+							</span>
+							<a class="bind-phone" >
+								<i style="background-image: url(static/img/修改手机.png);"></i>修改手机</a>
+							<a class="bind-email" >
+								<i style="background-image: url(static/img/绑定邮箱.png);"></i>修改邮箱</a>
+							<a  class="manage-addr" ><i style="background-image: url(static/img/地址管理.png);"></i>地址管理</a>
+						</div>
+					</div>
+				</div>
+
+			</article>
+		</header>
+		<div id="ms-center" class="personal-member" >
+			<div class="cont" id="add_address">
+				<div class="cont-side">
+					<div class="side-neck">
+						<i></i>
+					</div>
+					<div class="ms-side">
+						<article class="side-menu side-menu-off">
+							<dl class="side-menu-tree">
+								<dt>账户管理</dt>
+								<dd>
+									<a ><span ></span>我的资料</a>
+
+								</dd>
+								<dd>
+									<a ><span></span>安全设置</a>
+
+								</dd>
+								<dd>
+									<a ><span></span>账号绑定</a>
+
+								</dd>
+								<dd>
+									<a style="color:#f70"><span class="active"></span>地址管理</a>
+
+								</dd>
+							</dl>
+
+							<a ison="on" class="switch-side-menu icon-up-side"><i></i></a>
+						</article>
+					</div>
+				</div>
+				<div class="cont-main">
+					<div class="main-wrap mt15" >
+						<h3>
+	                        <strong style=" font-size: 14px;">收货地址</strong>
+	                    </h3>
+						<div class="user-profile clearfix" style="margin-left: 0px;width: 100%;border: 0px;">
+							<div class="user-profile-wrap" style="width: 100%;height: 500px;">
+								<p style="margin-left: 70px;font-size: 14px;"><span style="color:#F88600;font-size: 14px;">新增收货地址</span><span style="margin-left: 10px;font-size: 14px;font-weight: bold;">电话号码、手机号选填一项 &nbsp;, &nbsp;其余均为必填项</span> </p>
+							<div style="margin-left: 75px;margin-top: 30px;height: 30px;">
+								<span style="color: #F2873B;">&nbsp;</span><span class="titles">所在地区:</span>
+								<select id="province" name="province" v-model="sf" onchange="doProvAndCityRelation();"> 　　　　　　　　
+									<option id="choosePro" value="-1" >省份</option> 　　　　　　
+								</select>
+								<select id="citys" name="city" v-model="cs" onchange="doCityAndCountyRelation();">
+									　　<option id="chooseCity" value="-1" >城市</option> 　
+								</select>
+
+								<select id="county" name="county" v-model="qx"> 　　　
+									　　　<option id="chooseCounty" value="-1">区/县</option> 　　　　　　
+								</select>
+							</div>
+							<div style="margin-left: 75px;margin-top: 50px;">
+								<span style="color: #F2873B;">&nbsp;</span><span class="titles">详细地址:</span>
+							</div>
+							<div style="margin-left: 150px;margin-top:-40px;">
+								<textarea v-model="detailAddress" style="width:500px;height: 90px;padding: 5px;" placeholder="建议您如实填写详细收货地址，例如街道 名称，门牌号码，楼层和房间号等信息"></textarea>
+							</div>
+							
+							<div style="margin-left: 80px;margin-top: 20px;">
+								<span class="titles">邮政编号:</span>
+								<input type="text" v-model="postalCode " placeholder="如您不清楚地区邮递号，请填写000000" style="padding: 5px;width: 300px;margin-left: 14px;" />
+							</div>
+							
+							<div style="margin-left: 80px;margin-top: 30px;">
+								<span style="color: #F2873B;"></span>
+								<span class="titles">收货人姓名:</span>
+								<input type="text" v-model="name" placeholder="长度不超过25个字符" style="padding: 5px;width: 300px;margin-left: 14px;" />
+							</div>
+							<div style="margin-left: 80px;margin-top: 30px;">
+								<span class="titles">手机号码:</span>
+								<select style="padding: 5px;margin-left: 14px;">
+									<option>中国大陆+86</option>
+								</select>
+								<input type="text" v-model="tel" placeholder="电话号码、手机号码必须填一项"  style="padding: 5px;width: 200px;"/>
+							</div>
+							<div style="margin-left: 150px;margin-top: 10px;">
+								<div class="sui-form">
+								<div class="am-u-sm-7 am-u-sm-offset-3" style="padding-right: 0rem;"> 
+									<!--<label class="checkbox-pretty inline ">-->
+										<!--<input type="checkbox" checked="checked" style="width: 200px;height: 200px;">-->
+										<!--<span style="font-size: 12px;color: #878787;">-->
+											<input type="checkbox" v-model="checkbox" style="font-size: 12px;color: #333333;" value="设为默认地址"/>设为默认地址
+										<!--</span>-->
+									<!--</label>-->
+								</div>
+							   </div>
+							</div>
+							
+							<button @click="submit" style="margin-left:150px;margin-top:10px;background-color:#F37B1D ;color: #fff;width: 100px;height: 30px;border: 0px;border-radius: 5px;">确定</button>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+							<!--
+                            	作者：admin
+                            	时间：2016-05-05
+                            	描述：
+                            -->
+					<div style="margin-top: 30px;width: 1068px; margin: 15px 0 30px 170px;">
+						<dl style="color: #F88600;font-size: 16px;margin-top: 69px;">您已添加{{addressList.length}}个地址，你还可以添加{{5-addressList.length}}个地址</dl>
+
+						<table class="sui-table table-bordered-simple" style="margin-top: 20px;">
+						  <thead>
+							<tr>
+							  <th>收货人</th>
+							  <th>所在地区</th>
+							  <th>收货地址</th>
+							  <th>邮编</th>
+							  <th>电话/手机</th>
+							  <th>操作</th>
+							  <th></th>
+							</tr>
+						  </thead>
+							<!--{{address.List}}-->
+						  <tbody v-for="item,index in addressList">
+							<tr>
+							  <td>{{item.name}}</td>
+							  <td>{{item.addressSf}}&nbsp;{{item.addressCs}}&nbsp;{{item.addressQx}}</td>
+							  <td>{{item.detailAddress}}</td>
+							  <td>{{item.postalCode}}</td>
+							  <td>{{item.tel}}</td>
+							  <td style="color: #007AFF;">修改&nbsp;|&nbsp;删除</td>
+							  <td v-if="item.choice == 1">
+								  <span style="padding: 2px;font-size: 10px;color: #EC5937;border-radius:5px;background-color: #fad5d0;border: 1px #C85E0B solid;">默认地址</span>
+							  </td>
+							</tr>
+						  </tbody>
+						</table>
+					</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="ng-footer">
+			<textarea class="footer-dom" id="footer-dom-02">
+			</textarea>
+			<div class="ng-fix-bar"></div>
+		</div>
+		<style type="text/css">
+			.sui-table td 
+			{
+				font-size: 14px;
+			}
+			.sui-table td 
+			{
+				font-size: 12px;
+			}
+			.ng-footer {
+				height: 130px;
+				margin-top: 0;
+			}
+			
+			.ng-s-footer {
+				height: 130px;
+				background: none;
+				text-align: center;
+			}
+			
+			.ng-s-footer p.ng-url-list {
+				height: 25px;
+				line-height: 25px;
+			}
+			
+			.ng-s-footer p.ng-url-list a {
+				color: #666666;
+			}
+			
+			.ng-s-footer p.ng-url-list a:hover {
+				color: #f60;
+			}
+			
+			.ng-s-footer .ng-authentication {
+				float: none;
+				margin: 0 auto;
+				height: 25px;
+				width: 990px;
+				margin-top: 5px;
+			}
+			
+			.ng-s-footer p.ng-copyright {
+				float: none;
+				width: 100%;
+			}
+			
+			.root1200 .ng-s-footer p.ng-copyright {
+				width: 100%;
+			}
+		</style>
+		<!--<script type="text/javascript" src="static/js/safe/ms_common.min.js" ></script>-->
+		<!--Vue-->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script src="../static/login/js/jquery.cookie.js" ></script>
+		<!--<script src="static/js/cityJson.js" ></script>-->
+		<script type="text/javascript" src="static/js/address_Manage.js"></script>
+
+	</body>
+
+</html>

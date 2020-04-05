@@ -3,8 +3,6 @@ package com.jsu.dynamicSql;
 import com.jsu.bean.User;
 import org.apache.ibatis.jdbc.SQL;
 
-import java.util.Set;
-
 public class UserDynamicSql {
     public String selectUserWithDynamic(User user) {
         return new SQL() {
