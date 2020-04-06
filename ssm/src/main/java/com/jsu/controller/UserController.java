@@ -135,4 +135,23 @@ public class UserController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping("/updatePassword")
+    public Map updatePassword(User user){
+        System.out.println(user);
+        Map<String, Object> map = new HashMap<>();
+        try {
+            userService.updateUser(user);
+            User u = userService.queryUser(user);
+            map.put("code", 200);
+            map.put("data", new MsgMap("user", u));
+            map.put("msg", "success");
+        } catch (Exception e) {
+            map.put("code", 100);
+            map.put("data", "not data");
+            map.put("msg", "failure");
+        } finally {
+            return map;
+        }
+    }
 }

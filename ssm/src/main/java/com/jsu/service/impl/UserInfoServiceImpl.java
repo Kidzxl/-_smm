@@ -66,10 +66,17 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public List<Address> getAllAddress(int uid) {
         List<Address> addressList = addressDao.queryAllAddress(uid);
-        Collections.sort(addressList,new Comparator<Address>(){
-            @Override
-            public int compare(Address o1, Address o2) {
-                return o1.getChoice() - o2.getChoice();
+        Collections.sort(addressList, new Comparator<Address>() {
+            public int compare(Address arg0, Address arg1) {
+                int hits0 = arg0.getChoice();
+                int hits1 = arg1.getChoice();
+                if (hits1 > hits0) {
+                    return 1;
+                } else if (hits1 == hits0) {
+                    return 0;
+                } else {
+                    return -1;
+                }
             }
         });
         System.out.println(addressList);

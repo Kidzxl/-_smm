@@ -64,6 +64,7 @@ public class InfoUserController {
         }
         return map;
     }
+
     @ResponseBody
     @RequestMapping("/getAddress")
     public Map getAddress(int uid){
@@ -80,4 +81,6 @@ public class InfoUserController {
         }
         return map;
     }
+
+
 }

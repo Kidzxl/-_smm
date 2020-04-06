@@ -159,7 +159,7 @@
                             data:d,
                             success: function(response){
                                 if(response.code==200){
-                                    $.cookie('user', JSON.stringify(response.data[0]['value']));
+                                    $.cookie('user', JSON.stringify(response.data[0]['value']),{ path: '/' });
                                     console.log($.cookie('1user'));
                                     window.location.href="index.html";
                                 }
@@ -169,9 +169,7 @@
                             }
                         });
                     },
-                    register_submit:function () {
 
-                    }
                 }
             })
 
