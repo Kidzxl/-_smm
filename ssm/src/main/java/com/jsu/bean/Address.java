@@ -1,6 +1,14 @@
 package com.jsu.bean;
 
+/**
+ *  地址类 包含 id uid name postalCode(邮编)
+ *  detailAddress（详细地址)
+ *  addressSf 地址省份
+ *  addressCs 地址城市
+ *  addressQx 地址区县
+ */
 public class Address {
+
     private int id;
     private int uid;
     private String name;
