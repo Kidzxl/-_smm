@@ -15,4 +15,7 @@ public interface ProductDao {
 
     @Select("select * from product limit 0,#{0}")
     public List<Product> queryLimitProduct(int limit);
+
+    @Select("select * from product where id=#{0}")
+    public Product queryProductById(int id);
 }

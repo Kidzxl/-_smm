@@ -37,7 +37,7 @@ public class IndexServiceImpl implements IndexService {
     public List<Product> getHistoryProduct(String key, int cnt){
         Jedis jedis = JedisUtil.getJedis();
         Boolean is = jedis.exists(key);
-        if(key!=null && key.length()!=0 && is){
+        if((key!=null || key.length()!=0) && is){
             List<String> jsonList = jedis.srandmember(key, cnt);
             List<Product> beanList = null;
             try {
@@ -47,6 +47,7 @@ public class IndexServiceImpl implements IndexService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            System.out.println("beanList");
             return beanList;
         }else{
             List<Product> products = productDao.queryLimitProduct(3);

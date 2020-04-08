@@ -143,7 +143,8 @@
                             <input type="submit" value="Search">
                         </form>
                     </div>
-                    
+
+                    <!--products-->
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Products</h2>
                         <div class="thubmnail-recent">
@@ -175,7 +176,8 @@
                             </div>                             
                         </div>
                     </div>
-                    
+
+                    <!--pecent posts-->
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Recent Posts</h2>
                         <ul>
@@ -188,7 +190,7 @@
                     </div>
                 </div>
                 
-                <div class="col-md-8">
+                <div class="col-md-8" id="detail">
                     <div class="product-content-right">
                         <div class="product-breadcroumb">
                             <a href="">Home</a>
@@ -213,39 +215,47 @@
                             
                             <div class="col-sm-6">
                                 <div class="product-inner">
-                                    <h2 class="product-name">Sony Smart TV - 2015</h2>
+                                    <h2 class="product-name">{{product.name}}</h2>
                                     <div class="product-inner-price">
-                                        <ins>$700.00</ins> <del>$100.00</del>
+                                        <ins>${{product.discounts}}</ins> <del>$ {{product.price}}</del>
                                     </div>    
-                                    
+
+                                    <!--Add cart-->
                                     <form action="" class="cart">
                                         <div class="quantity">
                                             <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
                                         </div>
                                         <button class="add_to_cart_button" type="submit">Add to cart</button>
                                     </form>   
-                                    
+
+                                    <!--标签分类-->
                                     <div class="product-inner-category">
-                                        <p>Category: <a href="">Summer</a>. Tags: <a href="">awesome</a>, <a href="">best</a>, <a href="">sale</a>, <a href="">shoes</a>. </p>
+                                        <p>Category:
+                                            <a href="">Summer</a>
+                                            . Tags:
+                                            <a href="">awesome</a>
+                                            , <a href="">best</a>, <a href="">sale</a>, <a href="">shoes</a>. </p>
                                     </div> 
                                     
                                     <div role="tabpanel">
                                         <ul class="product-tab" role="tablist">
-                                            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Description</a></li>
-                                            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Reviews</a></li>
+                                            <li role="presentation" class="active">
+                                                <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Description</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Reviews</a>
+                                            </li>
                                         </ul>
                                         <div class="tab-content">
                                             <div role="tabpanel" class="tab-pane fade in active" id="home">
                                                 <h2>Product Description</h2>  
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tristique, diam in consequat iaculis, est purus iaculis mauris, imperdiet facilisis ante ligula at nulla. Quisque volutpat nulla risus, id maximus ex aliquet ut. Suspendisse potenti. Nulla varius lectus id turpis dignissim porta. Quisque magna arcu, blandit quis felis vehicula, feugiat gravida diam. Nullam nec turpis ligula. Aliquam quis blandit elit, ac sodales nisl. Aliquam eget dolor eget elit malesuada aliquet. In varius lorem lorem, semper bibendum lectus lobortis ac.</p>
-
-                                                <p>Mauris placerat vitae lorem gravida viverra. Mauris in fringilla ex. Nulla facilisi. Etiam scelerisque tincidunt quam facilisis lobortis. In malesuada pulvinar neque a consectetur. Nunc aliquam gravida purus, non malesuada sem accumsan in. Morbi vel sodales libero.</p>
+                                                <p>{{product.description}}</p>
                                             </div>
                                             <div role="tabpanel" class="tab-pane fade" id="profile">
                                                 <h2>Reviews</h2>
                                                 <div class="submit-review">
-                                                    <p><label for="name">Name</label> <input name="name" type="text"></p>
-                                                    <p><label for="email">Email</label> <input name="email" type="email"></p>
+                                                    <!--<p><label for="name">Name</label> <input name="name" type="text"></p>-->
+                                                    <!--<p><label for="email">Email</label> <input name="email" type="email"></p>-->
                                                     <div class="rating-chooser">
                                                         <p>Your rating</p>
 
@@ -431,7 +441,9 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="copyright">
-                       <p>Copyright &copy; 2015.Company name All rights reserved.<a target="_blank" href="http://www.cssmoban.com/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></p>
+                       <p>Copyright &copy; 2015.Company name All rights reserved.
+                           <a target="_blank" href="http://www.cssmoban.com/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
+                       </p>
                     </div>
                 </div>
                 
@@ -462,5 +474,62 @@
     
     <!-- Main Script -->
     <script src="static/js/main.js"></script>
+    <!--Vue-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="static/login/js/jquery.cookie.js" ></script>
+  <script>
+
+      new Vue({
+          el:"#detail",
+          data:{
+             product:"",
+          },
+          methods:{
+              GetRequest: function() {
+                  var url = location.search; //获取url中"?"符后的字串
+                  var theRequest = new Object();
+                  if (url.indexOf("?") != -1) {
+                      var str = url.substr(1);
+                      strs = str.split("&");
+                      for(var i = 0; i < strs.length; i ++) {
+                          theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+                      }
+                  }
+                  return theRequest;
+             },
+             getDetail:function (data) {
+                 var that = this;
+                 $.ajax({
+                     type: "GET",
+                     url: "http://192.168.0.106:80/ssm/product/getDetail",
+                     data:data,
+                     success: function(response){
+                         console.log(response);
+                         if (response.code == 200){
+                             that.product = response.data
+                         }else{
+                             console.log("获取页面详情出错")
+                         }
+                     },
+                     error:function (XMLHttpRequest, textStatus, errorThrown) {
+                         console.log("服务器失败")
+                     }
+                 });
+                 this.product = that.product;
+              }
+          },
+          mounted:function () {
+                var obj = this.GetRequest();
+                var data = {};
+                if(obj.hasOwnProperty("id")){
+                    data.id=obj["id"]
+                }else {
+                    data = null
+                }
+                this.getDetail(data)
+          }
+      })
+  </script>
   </body>
 </html>

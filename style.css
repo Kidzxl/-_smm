@@ -801,6 +801,7 @@ input[type="submit"]:hover, button[type=submit]:hover {background-color: #222}
 }
 .product-inner-price {
     margin-bottom: 25px;
+    font-size:20px;
 }
 .product-inner-price > ins {
     color: #5a88ca;
