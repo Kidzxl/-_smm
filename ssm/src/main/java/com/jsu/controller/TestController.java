@@ -34,7 +34,7 @@ public class TestController {
         Map<String,Object> map = new ConcurrentHashMap<>();
         map.put("code",200);
         map.put("method","post");
-        map.put("data",vueTest);
+        map.put("data22",vueTest);
         return map;
     }
 }
