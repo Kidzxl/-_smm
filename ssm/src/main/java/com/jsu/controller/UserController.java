@@ -42,7 +42,6 @@ public class UserController {
         }else{
             map.put("code",200);
             list.add(new MsgMap("user",u));
-//            list.add("token")
             map.put("data",list);
             map.put("msg","success");
         }
@@ -130,9 +129,8 @@ public class UserController {
             map.put("code", 100);
             map.put("data", "not data");
             map.put("msg", "failure");
-        } finally {
-            return map;
         }
+        return map;
     }
 
     @ResponseBody
@@ -150,8 +148,7 @@ public class UserController {
             map.put("code", 100);
             map.put("data", "not data");
             map.put("msg", "failure");
-        } finally {
-            return map;
         }
+        return map;
     }
 }

@@ -128,7 +128,8 @@
                     await sleep(1000);
                     console.log('Two seconds later');
                     console.log($.cookie("user"));
-                    if($.cookie("user")){
+
+                    if(typeof $.cookie("user")=="null"){
                         alert($.cookie("user"));
                         window.location.href=url;
                     }
@@ -158,9 +159,10 @@
                             url: "http://192.168.0.106:80/ssm/user/login",
                             data:d,
                             success: function(response){
+                                console.log(response);
                                 if(response.code==200){
                                     $.cookie('user', JSON.stringify(response.data[0]['value']),{ path: '/' });
-                                    console.log($.cookie('1user'));
+                                    console.log($.cookie('user'));
                                     window.location.href="index.html";
                                 }
                             },

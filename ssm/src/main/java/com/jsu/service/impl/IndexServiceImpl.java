@@ -35,23 +35,32 @@ public class IndexServiceImpl implements IndexService {
      * @return product List
      */
     public List<Product> getHistoryProduct(String key, int cnt){
+        System.out.println(123);
         Jedis jedis = JedisUtil.getJedis();
+        System.out.println(321);
         Boolean is = jedis.exists(key);
-        if((key!=null || key.length()!=0) && is){
+//        boolean k = (key!=null || key.length()!=0);
+//        System.out.println(is+" "+k);
+        if("".equals(key)&& (key!=null || key.length()!=0) && is){
+            System.out.println(1);
             List<String> jsonList = jedis.srandmember(key, cnt);
+            System.out.println(jsonList);
             List<Product> beanList = null;
             try {
                  beanList= new ObjectMapper().readValue((JsonParser) jsonList, new TypeReference<List<Product>>() {});
                 System.out.println(beanList);
-
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                System.out.println("转换出错 indexServiceImpl 48行");
+            }finally {
+                System.out.println("最终");
+                jedis.close();
             }
             System.out.println("beanList");
             return beanList;
         }else{
+//            System.out.println("数据查询历史");
             List<Product> products = productDao.queryLimitProduct(3);
-            System.out.println(products);
+//            System.out.println(products);
             return products;
         }
     }

@@ -3,15 +3,15 @@ package com.jsu.bean;
 import java.io.Serializable;
 
 public class MsgMap implements Serializable {
-    private String name;
+    private Object name;
     private Object value;
 
-    public MsgMap(String name, Object value) {
+    public MsgMap(Object name, Object value) {
         this.name = name;
         this.value = value;
     }
 
-    public String getName() {
+    public Object getName() {
         return name;
     }
 

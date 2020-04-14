@@ -14,11 +14,12 @@ public class DetailServiceImpl implements DetailService {
 
     @Override
     public Product getDetail(int id) {
+        System.out.println(id);
         Product product = productDao.queryProductById(id);
+        System.out.println(product);
         if(product == null)
         {
             System.out.println(""+id+"查询不到");
-
         }
         return product;
     }

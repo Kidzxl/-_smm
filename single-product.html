@@ -90,7 +90,11 @@
             </div>
         </div>
     </div> <!-- End site branding area -->
-    
+    <style type="text/css">
+        [v-cloak] {
+            display: none;
+        }
+    </style>
     <div class="mainmenu-area">
         <div class="container">
             <div class="row">
@@ -190,7 +194,7 @@
                     </div>
                 </div>
                 
-                <div class="col-md-8" id="detail">
+                <div class="col-md-8" id="detail" v-cloak>
                     <div class="product-content-right">
                         <div class="product-breadcroumb">
                             <a href="">Home</a>
@@ -221,12 +225,12 @@
                                     </div>    
 
                                     <!--Add cart-->
-                                    <form action="" class="cart">
+                                    <div  class="cart">
                                         <div class="quantity">
-                                            <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
+                                            <input type="number" size="4" class="input-text qty text" title="Qty" v-model="num"  name="quantity" min="1" step="1">
                                         </div>
-                                        <button class="add_to_cart_button" type="submit">Add to cart</button>
-                                    </form>   
+                                        <button class="add_to_cart_button" type="submit" @click="addCart">Add to cart</button>
+                                    </div>
 
                                     <!--标签分类-->
                                     <div class="product-inner-category">
@@ -480,10 +484,12 @@
     <script src="static/login/js/jquery.cookie.js" ></script>
   <script>
 
-      new Vue({
+      var d = new Vue({
           el:"#detail",
           data:{
              product:"",
+              user:null,
+              num:1,
           },
           methods:{
               GetRequest: function() {
@@ -499,6 +505,7 @@
                   return theRequest;
              },
              getDetail:function (data) {
+                  console.log(data);
                  var that = this;
                  $.ajax({
                      type: "GET",
@@ -517,6 +524,44 @@
                      }
                  });
                  this.product = that.product;
+              },
+              addCart:function () {
+                  var that = this;
+                  var d = {
+                      id:this.product.id,
+                      name:this.product.name,
+                      price:this.product.price,
+                      discounts:this.product.discounts,
+                      star:this.product.star,
+                      description:this.product.description,
+                      amount:this.product.amount,
+                      uid:0,
+                      num:this.num,
+                  };
+                  if(this.user){
+                      d.uid = this.user.id;
+
+                  }else{
+                      alert("请先登录...");
+                      window.location.href="login.html";
+                      return ;
+                  }
+                  $.ajax({
+                      type: "GET",
+                      url: "http://192.168.0.106:80/ssm/product/addCart",
+                      data:d,
+                      success: function(response){
+                          console.log(response);
+                          if (response.code == 200){
+                             alert("添加成功");
+                          }else{
+                              console.log("获取页面详情出错")
+                          }
+                      },
+                      error:function (XMLHttpRequest, textStatus, errorThrown) {
+                          console.log("服务器失败")
+                      }
+                  });
               }
           },
           mounted:function () {
@@ -527,7 +572,11 @@
                 }else {
                     data = null
                 }
-                this.getDetail(data)
+                this.getDetail(data);
+                var u = $.cookie('user');
+                if(u){
+                    this.user = JSON.parse(u);
+                }
           }
       })
   </script>

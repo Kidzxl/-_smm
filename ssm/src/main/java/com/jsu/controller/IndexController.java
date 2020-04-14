@@ -52,7 +52,7 @@ public class IndexController {
     @RequestMapping("/getHistory")
     @ResponseBody
     public Map getHistory(){
-        List<Product> products = indexService.getHistoryProduct("",3);
+        List<Product> products = indexService.getHistoryProduct("zxl",3);
         Map<String,Object> map = new HashMap<>();
         int code ;
         String msg;

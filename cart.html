@@ -203,42 +203,47 @@
                                             <th class="product-subtotal">Total</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr class="cart_item">
+                                    <style>
+                                        [v-cloak] {
+                                            display: none;
+                                        }
+                                    </style>
+                                    <tbody id="cartTable">
+                                        <tr class="cart_item" v-for="product,index in productList" v-cloak>
                                             <td class="product-remove">
-                                                <a title="Remove this item" class="remove" href="#">×</a> 
+                                                <input type="checkbox" v-model="product.checkbox" @click="calculateTotal(index)" :value="product.name.discounts * product.value" />
                                             </td>
 
                                             <td class="product-thumbnail">
-                                                <a href="single-product.html"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="static/img/product-thumb-2.jpg"></a>
+                                                <a href="single-product.html">
+                                                    <img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="static/img/product-thumb-2.jpg"></a>
                                             </td>
 
                                             <td class="product-name">
-                                                <a href="single-product.html">Ship Your Idea</a> 
+                                                <a href="single-product.html">{{product.name.name}}</a>
                                             </td>
 
                                             <td class="product-price">
-                                                <span class="amount">£15.00</span> 
+                                                <span class="amount">$ {{product.name.discounts}}</span>
                                             </td>
 
                                             <td class="product-quantity">
                                                 <div class="quantity buttons_added">
-                                                    <input type="button" class="minus" value="-">
-                                                    <input type="number" size="4" class="input-text qty text" title="Qty" value="1" min="0" step="1">
-                                                    <input type="button" class="plus" value="+">
+                                                    <input type="button" class="minus" value="-" @click="sub(product,index)">
+                                                    <input type="text" readonly size="4" class="input-text qty text" v-model="product.value">
+                                                    <input type="button" class="plus" value="+" @click="add(product,index)">
                                                 </div>
                                             </td>
 
                                             <td class="product-subtotal">
-                                                <span class="amount">£15.00</span> 
+                                                <span class="amount" >{{product.name.discounts * product.value}}</span>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="actions" colspan="6">
                                                 <div class="coupon">
-                                                    <label for="coupon_code">Coupon:</label>
-                                                    <input type="text" placeholder="Coupon code" value="" id="coupon_code" class="input-text" name="coupon_code">
-                                                    <input type="submit" value="Apply Coupon" name="apply_coupon" class="button">
+                                                    <label >total :</label>
+                                                    <input type="text" v-model="total" readonly style="width: 40%;"/>元
                                                 </div>
                                                 <input type="submit" value="Update Cart" name="update_cart" class="button">
                                                 <input type="submit" value="Checkout" name="proceed" class="checkout-button button alt wc-forward">
@@ -671,5 +676,102 @@
     
     <!-- Main Script -->
     <script src="static/js/main.js"></script>
+
+    <!--Vue-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="static/login/js/jquery.cookie.js" ></script>
+
+    <script>
+        var vm = new Vue({
+            el:"#cartTable",
+            data: {
+                user:null,
+                productList:null,
+                total:0,
+                alreadyList:[],
+                alreadyTotal:[],
+            },
+            methods:{
+                init:function () {
+                    var d = {
+                        uid:this.user.id
+                    };
+                    var that = this;
+                    $.ajax({
+                        type: "GET",
+                        url: "http://192.168.0.106:80/ssm/product/getCart",
+                        data:d,
+                        success: function(response){
+                            console.log(response);
+                            if (response.code == 200){
+                                that.productList = response.data
+                            }else{
+                                console.log("获取购物车出错")
+                            }
+                        },
+                        error:function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log("服务器失败")
+                        }
+                    });
+                    this.productList = that.productList
+                },
+                getUser:function () {
+                    if($.cookie("user")){
+                        this.user=JSON.parse($.cookie("user"));
+                    }else{
+                        alert("请先登录....");
+                        window.location.href="login.html";
+                    }
+                },
+                add:function(product,index){
+                    product.value += 1;
+                    if(product.checkbox){
+                        this.total += product.name.discounts;
+                        this.alreadyTotal[$.inArray(index,this.alreadyList)] += product.name.discounts
+                    }
+                },
+                sub:function(product,index){
+                    if(product.value > 1){
+                        product.value -= 1;
+                        if(product.checkbox){
+                            this.total -= product.name.discounts;
+                            this.alreadyTotal[$.inArray(index,this.alreadyList)] -= product.name.discounts
+                        }
+                    }else{
+                        alert("不能更少了");
+                    }
+                },
+                calculateTotal:function (index) {
+                    if($.inArray(index,this.alreadyList)>=0){
+                        this.total -= this.alreadyTotal[$.inArray(index,this.alreadyList)];
+                        this.alreadyList.splice($.inArray(index,this.alreadyList),1);
+                        this.alreadyTotal.splice($.inArray(index,this.alreadyList),1);
+                    }else{
+                        this.total += Number($("input[type=checkbox]")[index].value);
+                        this.alreadyList.push(index);
+                        this.alreadyTotal.push(Number($("input[type=checkbox]")[index].value));
+                    }
+                }
+            },
+            mounted:function () {
+                this.getUser();
+                this.init();
+            },
+            watch:{
+                productList(val,oldval){
+                    var sum = 0;
+                    for(var i=0;i<val.length;i++){
+                        if(val[i].checkbox){
+                            sum += val[i].value* val[i].name.discounts;
+                        }
+                    }
+                    console.log(sum)
+                },
+                deep:true
+            },
+
+        })
+    </script>
   </body>
 </html>

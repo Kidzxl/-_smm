@@ -3296,7 +3296,7 @@ var app = new Vue({
                 success: function(response){
                     console.log(response);
                     if (response.code == 200){
-                        alert(1);
+                        window.location.href="userIndex.html";
                     }else{
                         console.log("获取验证码出错")
                     }

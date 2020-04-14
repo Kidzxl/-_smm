@@ -1,5 +1,7 @@
 package com.jsu.bean;
 
+import java.io.Serializable;
+
 /**
  * 产品类  一个产品对应一个产品类
  * id name price
@@ -8,7 +10,7 @@ package com.jsu.bean;
  * description 描述
  * amount 已经出售多少件
  */
-public class Product {
+public class Product implements Serializable {
     private int id;
     private String name;
     private double price;
