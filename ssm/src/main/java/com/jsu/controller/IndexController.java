@@ -18,6 +18,7 @@ public class IndexController {
 
     @Autowired
     private IndexService indexService;
+
     /**
      * 尝试获取销售最好的产品
      * @return Map 消息集合

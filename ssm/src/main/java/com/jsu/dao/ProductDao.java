@@ -18,4 +18,8 @@ public interface ProductDao {
 
     @Select("select * from product where id=#{0}")
     public Product queryProductById(int id);
+
+    @Select("select id from product where name=#{name} and price=#{price} and star = #{star}")
+    public int queryId(Product product);
+
 }

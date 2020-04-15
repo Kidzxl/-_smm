@@ -90,9 +90,14 @@
                     </div>
                 </div>
                 
-                <div class="col-sm-6">
+                <div class="col-sm-6" id="cartDetail" v-if="user">
                     <div class="shopping-item">
-                        <a href="cart.html">Cart - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                        <a href="cart.html">
+                            Cart -
+                            <span class="cart-amunt">{{cartTotal}}</span>
+                            <i class="fa fa-shopping-cart"></i>
+                            <span class="product-count">{{cartNumber}}</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -604,6 +609,41 @@
             mounted:function () {
                 this.getTop();
                 this.getViewed();
+            }
+        })
+
+        var cartDetail = new Vue({
+            el:"#cartDetail",
+            data:{
+                user:u,
+            },
+            methods:{
+                init:function () {
+                    var data = {
+                        uid:this.user.id,
+                    };
+                    $.ajax({
+                        type: "GET",
+                        url: "http://192.168.0.106:80/ssm/product/getIndexCart",
+                        data:data,
+                        success: function(response){
+                            console.log(response);
+                            if (response.code == 200){
+
+                            }else{
+                                console.log("获取首页购物车出错")
+                            }
+                        },
+                        error:function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log("服务器失败")
+                        }
+                    });
+                }
+            },
+            mounted:function () {
+                if(u){
+                    this.init();
+                }
             }
         })
     </script>

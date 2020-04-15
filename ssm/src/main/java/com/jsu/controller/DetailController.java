@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jsu.bean.Cart;
 import com.jsu.bean.MsgMap;
 import com.jsu.bean.Product;
 import com.jsu.service.DetailService;
@@ -71,14 +72,31 @@ public class DetailController {
     @ResponseBody
     @RequestMapping("/addCart")
     public Map addCart(Product product,int num,int uid) {
-        String key = "user:"+uid+":cart";;
+        String key = "user:"+uid+":cart";
         Jedis jedis = JedisUtil.getJedis();
+
         String flied = null;
         try {
             flied = new ObjectMapper().writeValueAsString(product);
+            String value = jedis.hget(key, flied);
+            int n;
+            if(value==null){
+                n = 0;
+            }else{
+                n = Integer.parseInt(value);
+            }
+            num += n;
+            jedis.hdel(key,flied);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+        // 写入数据库
+        int pid = detailService.getPid(product);
+        Cart cart = new Cart();
+        cart.setUid(uid);
+        cart.setNum(num);
+        cart.setPid(pid);
+        detailService.insertCart(cart);
         jedis.hincrBy(key,flied,num);
         Map<String, String> m = jedis.hgetAll(key);
         System.out.println("购物车内容"+ m);
@@ -89,28 +107,16 @@ public class DetailController {
         return map;
     }
 
-    @RequestMapping("/getCart")
-    @ResponseBody
-    public Map getCart(int uid) throws JsonProcessingException {
-        Map<String,Object> map = new HashMap<>();
-        String key ="user:"+uid+":cart";
-        Jedis jedis = JedisUtil.getJedis();
-        if(jedis.exists(key)){
-            Map<String, String> carts = jedis.hgetAll(key);
-            List<MsgMap> data = new ArrayList<>();
-            for(String k : carts.keySet()){
-                Product product = new ObjectMapper().readValue(k,Product.class);
-                int num = Integer.parseInt(carts.get(k));
-                data.add(new MsgMap(product,num));
-            }
-            map.put("data",data);
-            map.put("code",200);
-            map.put("msg","成功");
-        }else{
-            map.put("data","not data");
-            map.put("code",200);
-            map.put("msg","成功");
-        }
-        return map;
-    }
+
+//    @RequestMapping("/getIndexCart")
+//    @ResponseBody
+//    public Map getIndexCart(int uid){
+//        String key ="user:"+uid+":cart";
+//        Jedis jedis  = JedisUtil.getJedis();
+//        if(jedis.exists(key)){
+//
+//        }
+//        return null;
+//    }
+
 }
