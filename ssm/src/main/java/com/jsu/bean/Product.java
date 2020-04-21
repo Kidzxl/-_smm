@@ -17,7 +17,22 @@ public class Product implements Serializable {
     private double discounts;
     private int star;
     private String description;
-    private int amount;
+    private int sell;
+    private int inventory;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", discounts=" + discounts +
+                ", star=" + star +
+                ", description='" + description + '\'' +
+                ", sell=" + sell +
+                ", inventory=" + inventory +
+                '}';
+    }
 
     public int getId() {
         return id;
@@ -67,24 +82,19 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getSell() {
+        return sell;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setSell(int sell) {
+        this.sell = sell;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", discounts=" + discounts +
-                ", star=" + star +
-                ", description='" + description + '\'' +
-                ", amount=" + amount +
-                '}';
+    public int getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(int inventory) {
+        this.inventory = inventory;
     }
 }

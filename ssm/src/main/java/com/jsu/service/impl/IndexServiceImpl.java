@@ -21,7 +21,7 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     public List<Product> getTopProduct(int cnt) {
-        List<Product> products = productDao.queryTopProductByAmmount(cnt);
+        List<Product> products = productDao.queryTopProductBySell(cnt);
         if(products.size() <=0){
             return null;
         }
@@ -35,9 +35,7 @@ public class IndexServiceImpl implements IndexService {
      * @return product List
      */
     public List<Product> getHistoryProduct(String key, int cnt){
-        System.out.println(123);
         Jedis jedis = JedisUtil.getJedis();
-        System.out.println(321);
         Boolean is = jedis.exists(key);
 //        boolean k = (key!=null || key.length()!=0);
 //        System.out.println(is+" "+k);

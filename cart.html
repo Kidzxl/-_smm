@@ -82,9 +82,12 @@
                     </div>
                 </div>
                 
-                <div class="col-sm-6">
+                <div class="col-sm-6" id="vCart">
                     <div class="shopping-item">
-                        <a href="cart.html">Cart - <span class="cart-amunt">$800</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                        <a href="cart.html">Cart -
+                            <span class="cart-amunt">{{total}}</span>
+                            <i class="fa fa-shopping-cart"></i>
+                            <span class="product-count">{{num}}</span></a>
                     </div>
                 </div>
             </div>
@@ -106,7 +109,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="index.html">Home</a></li>
                         <li><a href="shop.html">Shop page</a></li>
-                        <li><a href="single-product.html">Single product</a></li>
+                        <!--<li><a href="single-product.html">Single product</a></li>-->
                         <li class="active"><a href="cart.html">Cart</a></li>
                         <li><a href="checkout.html">Checkout</a></li>
                         <li><a href="#">Category</a></li>
@@ -768,9 +771,22 @@
                     }
                     console.log(sum)
                 },
-                deep:true
+                deep:true,
+                total(val,oldval){
+                    cart._data.total = val;
+                }
             },
 
+        });
+        var cart = new Vue({
+            el:"#vCart",
+            data:{
+                total:vm._data.total,
+                num:2
+            },
+            methods:{
+
+            }
         })
     </script>
   </body>
