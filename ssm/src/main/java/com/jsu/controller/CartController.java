@@ -2,7 +2,9 @@ package com.jsu.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jsu.bean.Cart;
 import com.jsu.bean.MsgMap;
+import com.jsu.bean.MyCart;
 import com.jsu.bean.Product;
 import com.jsu.service.CartService;
 import com.jsu.util.JedisUtil;
@@ -34,24 +36,27 @@ public class CartController {
     @ResponseBody
     public Map getCart(int uid) throws JsonProcessingException {
         Map<String,Object> map = new HashMap<>();
-        String key ="user:"+uid+":cart";
-        Jedis jedis = JedisUtil.getJedis();
-        if(jedis.exists(key)){
-            Map<String, String> carts = jedis.hgetAll(key);
-            List<MsgMap> data = new ArrayList<>();
-            for(String k : carts.keySet()){
-                Product product = new ObjectMapper().readValue(k,Product.class);
-                int num = Integer.parseInt(carts.get(k));
-                data.add(new MsgMap(product,num));
-            }
-            map.put("data",data);
+//        String key ="user:"+uid+":cart";
+//        Jedis jedis = JedisUtil.getJedis();
+//        if(jedis.exists(key)){
+//            Map<String, String> carts = jedis.hgetAll(key);
+//            List<MsgMap> data = new ArrayList<>();
+//            for(String k : carts.keySet()){
+//                Product product = new ObjectMapper().readValue(k,Product.class);
+//                int num = Integer.parseInt(carts.get(k));
+//                data.add(new MsgMap(product,num));
+//            }
+//            map.put("data",data);
+//            map.put("code",200);
+//            map.put("msg","成功");
+//        }else{
+        System.out.println(uid);
+            List<MyCart> cart = cartService.getCartByUid(uid);
+
+            map.put("data",cart);
             map.put("code",200);
             map.put("msg","成功");
-        }else{
-            map.put("data","not data");
-            map.put("code",200);
-            map.put("msg","成功");
-        }
+//        }
         return map;
     }
 

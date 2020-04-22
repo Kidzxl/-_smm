@@ -30,9 +30,13 @@
     <![endif]-->
   </head>
   <body>
-   
+  <style type="text/css">
+      [v-cloak] {
+          display: none;
+      }
+  </style>
     <div class="header-area">
-        <div class="container">
+        <div class="container"  id="user-info"  v-cloak>
             <div class="row">
                 <div class="col-md-8">
                     <div class="user-menu">
@@ -41,29 +45,31 @@
                             <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
                             <li><a href="cart.html"><i class="fa fa-user"></i> My Cart</a></li>
                             <li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li>
-                            <li><a href="#"><i class="fa fa-user"></i> Login</a></li>
+                            <div v-if="user==null"  style="margin: 0px;padding: 0px;display: inline-block;">
+                                <li><a href="login.html"><i class="fa fa-user"></i> Login</a></li>
+                                <li><a href="register.html"><i class="fa fa-user"></i> register</a></li>
+                            </div>
                         </ul>
                     </div>
                 </div>
-                
+
                 <div class="col-md-4">
                     <div class="header-right">
                         <ul class="list-unstyled list-inline">
-                            <li class="dropdown dropdown-small">
-                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">currency :</span><span class="value">USD </span><b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">USD</a></li>
-                                    <li><a href="#">INR</a></li>
-                                    <li><a href="#">GBP</a></li>
-                                </ul>
-                            </li>
 
-                            <li class="dropdown dropdown-small">
-                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">language :</span><span class="value">English </span><b class="caret"></b></a>
+                            <li class="dropdown dropdown-small" v-if="user!=null">
+                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="userInfo/userIndex.html">
+                                    <span class="key">
+                                        <i class="fa fa-user"></i>
+                                        {{user.username}}
+                                    </span>
+                                    <span class="value">欢迎回来 </span>
+                                    <b class="caret"></b>
+                                </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">English</a></li>
-                                    <li><a href="#">French</a></li>
-                                    <li><a href="#">German</a></li>
+                                    <li><a href="userInfo/userIndex.html">个人信息</a></li>
+                                    <li><a @click="logout">注销</a></li>
+
                                 </ul>
                             </li>
                         </ul>
@@ -87,7 +93,7 @@
                         <a href="cart.html">Cart -
                             <span class="cart-amunt">{{total}}</span>
                             <i class="fa fa-shopping-cart"></i>
-                            <span class="product-count">{{num}}</span></a>
+                            <span class="product-count">{{cartNum}}</span></a>
                     </div>
                 </div>
             </div>
@@ -214,7 +220,7 @@
                                     <tbody id="cartTable">
                                         <tr class="cart_item" v-for="product,index in productList" v-cloak>
                                             <td class="product-remove">
-                                                <input type="checkbox" v-model="product.checkbox" @click="calculateTotal(index)" :value="product.name.discounts * product.value" />
+                                                <input type="checkbox" v-model="product.checkbox" @click="calculateTotal(index)" :value="product.discounts * product.num" />
                                             </td>
 
                                             <td class="product-thumbnail">
@@ -223,23 +229,23 @@
                                             </td>
 
                                             <td class="product-name">
-                                                <a href="single-product.html">{{product.name.name}}</a>
+                                                <a href="single-product.html">{{product.name}}</a>
                                             </td>
 
                                             <td class="product-price">
-                                                <span class="amount">$ {{product.name.discounts}}</span>
+                                                <span class="amount">$ {{product.discounts}}</span>
                                             </td>
 
                                             <td class="product-quantity">
                                                 <div class="quantity buttons_added">
                                                     <input type="button" class="minus" value="-" @click="sub(product,index)">
-                                                    <input type="text" readonly size="4" class="input-text qty text" v-model="product.value">
+                                                    <input type="text" readonly size="4" class="input-text qty text" v-model="product.num">
                                                     <input type="button" class="plus" value="+" @click="add(product,index)">
                                                 </div>
                                             </td>
 
                                             <td class="product-subtotal">
-                                                <span class="amount" >{{product.name.discounts * product.value}}</span>
+                                                <span class="amount" >{{product.discounts * product.num}}</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -576,8 +582,8 @@
 
 
                             </div>
-                        </div>                        
-                    </div>                    
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -600,7 +606,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
                         <h2 class="footer-wid-title">User Navigation </h2>
@@ -610,10 +616,10 @@
                             <li><a href="#">Wishlist</a></li>
                             <li><a href="#">Vendor contact</a></li>
                             <li><a href="#">Front page</a></li>
-                        </ul>                        
+                        </ul>
                     </div>
                 </div>
-                
+
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
                         <h2 class="footer-wid-title">Categories</h2>
@@ -623,10 +629,10 @@
                             <li><a href="#">LED TV</a></li>
                             <li><a href="#">Computer</a></li>
                             <li><a href="#">Gadets</a></li>
-                        </ul>                        
+                        </ul>
                     </div>
                 </div>
-                
+
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-newsletter">
                         <h2 class="footer-wid-title">Newsletter</h2>
@@ -642,7 +648,7 @@
             </div>
         </div>
     </div> <!-- End footer top area -->
-    
+
     <div class="footer-bottom-area">
         <div class="container">
             <div class="row">
@@ -651,7 +657,7 @@
                         <p>Copyright &copy; 2015.Company name All rights reserved.<a target="_blank" href="http://www.cssmoban.com/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></p>
                     </div>
                 </div>
-                
+
                 <div class="col-md-4">
                     <div class="footer-card-icon">
                         <i class="fa fa-cc-discover"></i>
@@ -663,20 +669,20 @@
             </div>
         </div>
     </div> <!-- End footer bottom area -->
-   
+
     <!-- Latest jQuery form server -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
-    
+
     <!-- Bootstrap JS form CDN -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    
+
     <!-- jQuery sticky menu -->
     <script src="static/js/owl.carousel.min.js"></script>
     <script src="static/js/jquery.sticky.js"></script>
-    
+
     <!-- jQuery easing -->
     <script src="static/js/jquery.easing.1.3.min.js"></script>
-    
+
     <!-- Main Script -->
     <script src="static/js/main.js"></script>
 
@@ -728,18 +734,19 @@
                     }
                 },
                 add:function(product,index){
-                    product.value += 1;
+                    product.num += 1;
                     if(product.checkbox){
-                        this.total += product.name.discounts;
-                        this.alreadyTotal[$.inArray(index,this.alreadyList)] += product.name.discounts
+                        this.total += product.discounts;
+                        this.alreadyTotal[$.inArray(index,this.alreadyList)] += product.discounts
                     }
+
                 },
                 sub:function(product,index){
-                    if(product.value > 1){
-                        product.value -= 1;
+                    if(product.num > 1){
+                        product.num -= 1;
                         if(product.checkbox){
-                            this.total -= product.name.discounts;
-                            this.alreadyTotal[$.inArray(index,this.alreadyList)] -= product.name.discounts
+                            this.total -= product.discounts;
+                            this.alreadyTotal[$.inArray(index,this.alreadyList)] -= product.discounts
                         }
                     }else{
                         alert("不能更少了");
@@ -766,14 +773,18 @@
                     var sum = 0;
                     for(var i=0;i<val.length;i++){
                         if(val[i].checkbox){
-                            sum += val[i].value* val[i].name.discounts;
+                            sum += val[i].num* val[i].discounts;
                         }
                     }
-                    console.log(sum)
                 },
                 deep:true,
                 total(val,oldval){
+                    cart._data.cartNum = 0;
                     cart._data.total = val;
+                    for(var i= 0 ;i< this.alreadyList.length;i++){
+                        cart._data.cartNum  += this.productList[i].num;
+                    }
+
                 }
             },
 
@@ -782,12 +793,34 @@
             el:"#vCart",
             data:{
                 total:vm._data.total,
-                num:2
+                cartNum: 0
             },
             methods:{
 
             }
         })
+        var  u =null ;
+        if ($.cookie("user")){
+            u = JSON.parse($.cookie("user"));
+        }
+        var userInfo = new Vue({
+            el:"#user-info",
+            data:{
+                user:u,
+            },
+            methods:{
+                test:function () {
+                    console.log(this.user+"ddd")
+                },
+                logout:function () {
+                    $.cookie("user",null,{ path: '/' });
+                    u = null;
+                    window.location.href="index.html";
+                }
+            }
+        });
+
+
     </script>
   </body>
 </html>

@@ -30,9 +30,13 @@
     <![endif]-->
   </head>
   <body>
-   
+  <style type="text/css">
+      [v-cloak] {
+          display: none;
+      }
+  </style>
     <div class="header-area">
-        <div class="container">
+        <div class="container" id="user-info"  v-cloak>
             <div class="row">
                 <div class="col-md-8">
                     <div class="user-menu">
@@ -41,29 +45,32 @@
                             <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
                             <li><a href="cart.html"><i class="fa fa-user"></i> My Cart</a></li>
                             <li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li>
-                            <li><a href="#"><i class="fa fa-user"></i> Login</a></li>
+                            <div v-if="user==null"  style="margin: 0px;padding: 0px;display: inline-block;">
+                                <li><a href="login.html"><i class="fa fa-user"></i> Login</a></li>
+                                <li><a href="register.html"><i class="fa fa-user"></i> register</a></li>
+                            </div>
                         </ul>
                     </div>
                 </div>
-                
+
+
                 <div class="col-md-4">
                     <div class="header-right">
                         <ul class="list-unstyled list-inline">
-                            <li class="dropdown dropdown-small">
-                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">currency :</span><span class="value">USD </span><b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">USD</a></li>
-                                    <li><a href="#">INR</a></li>
-                                    <li><a href="#">GBP</a></li>
-                                </ul>
-                            </li>
 
-                            <li class="dropdown dropdown-small">
-                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">language :</span><span class="value">English </span><b class="caret"></b></a>
+                            <li class="dropdown dropdown-small" v-if="user!=null">
+                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="userInfo/userIndex.html">
+                                    <span class="key">
+                                        <i class="fa fa-user"></i>
+                                        {{user.username}}
+                                    </span>
+                                    <span class="value">欢迎回来 </span>
+                                    <b class="caret"></b>
+                                </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">English</a></li>
-                                    <li><a href="#">French</a></li>
-                                    <li><a href="#">German</a></li>
+                                    <li><a href="userInfo/userIndex.html">个人信息</a></li>
+                                    <li><a @click="logout">注销</a></li>
+
                                 </ul>
                             </li>
                         </ul>
@@ -81,10 +88,15 @@
                         <h1><a href="./"><img src="static/img/logo.png"></a></h1>
                     </div>
                 </div>
-                
-                <div class="col-sm-6">
+
+                <div class="col-sm-6" id="cartDetail" v-if="user">
                     <div class="shopping-item">
-                        <a href="cart.html">Cart - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                        <a href="cart.html">
+                            Cart -
+                            <span class="cart-amunt">{{cartTotal}}</span>
+                            <i class="fa fa-shopping-cart"></i>
+                            <span class="product-count">{{cartNum}}</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -438,5 +450,131 @@
     
     <!-- Main Script -->
     <script src="static/js/main.js"></script>
+
+    <!--Vue-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="static/login/js/jquery.cookie.js" ></script>
+
+    <script>
+        var  u =null ;
+        if ($.cookie("user")){
+            u = JSON.parse($.cookie("user"));
+        }
+        var userInfo = new Vue({
+            el:"#user-info",
+            data:{
+                user:u,
+            },
+            methods:{
+                test:function () {
+                    console.log(this.user+"ddd")
+                },
+                logout:function () {
+                    $.cookie("user",null,{ path: '/' });
+                    u = null;
+                    window.location.href="index.html";
+                }
+            }
+        });
+
+        var rank = new Vue({
+            el:"#rank",
+            data:{
+                topList:null,
+                viewedList:null,
+            },
+            methods:{
+                getTop:function () {
+                    var that = this;
+                    $.ajax({
+                        type: "GET",
+                        url: "http://192.168.0.106:80/ssm/index/getTop",
+                        success: function(response){
+                            console.log(response);
+                            if (response.code == 200){
+                                that.topList = response.data
+                            }else{
+                                console.log("获取验证码出错")
+                            }
+                        },
+                        error:function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log("服务器失败")
+                        }
+                    });
+                    this.topList = that.topList;
+                },
+                getViewed:function () {
+                    var that = this;
+                    $.ajax({
+                        type: "GET",
+                        url: "http://192.168.0.106:80/ssm/index/getHistory",
+                        success: function(response){
+                            console.log(response);
+                            console.log(22);
+                            if (response.code == 200){
+                                that.viewedList = response.data
+                            }else{
+                                console.log("获取验证码出错")
+                            }
+                        },
+                        error:function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log("服务器失败")
+                        }
+                    });
+                    this.viewedList = that.viewedList;
+                },
+                getGoodsHref:function(val){
+                    return 'single-product.html?id='+val
+                }
+
+            },
+            mounted:function () {
+                this.getTop();
+                this.getViewed();
+            }
+        })
+
+        var cartDetail = new Vue({
+            el:"#cartDetail",
+            data:{
+                user:u,
+                cartTotal:0,
+                cartNum:0,
+            },
+            methods:{
+                init:function () {
+                    var data = {
+                        uid:this.user.id,
+                    };
+                    var that = this;
+                    $.ajax({
+                        type: "GET",
+                        url: "http://192.168.0.106:80/ssm/product/getIndexCart",
+                        data:data,
+                        success: function(response){
+                            console.log(response);
+                            if (response.code == 200){
+                                that.cartTotal = response.data.sum;
+                                that.cartNum = response.data.num;
+                            }else{
+                                console.log("获取首页购物车出错")
+                            }
+                        },
+                        error:function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log("服务器失败")
+                        }
+                    });
+                    this.cartNum = that.cartNum;
+                    this.cartTotal = that.cartTotal;
+                }
+            },
+            mounted:function () {
+                if(u){
+                    this.init();
+                }
+            }
+        })
+    </script>
   </body>
 </html>

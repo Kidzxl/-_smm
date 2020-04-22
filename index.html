@@ -89,14 +89,14 @@
                         <h1><a href="./"><img src="static/img/logo.png"></a></h1>
                     </div>
                 </div>
-                
+
                 <div class="col-sm-6" id="cartDetail" v-if="user">
                     <div class="shopping-item">
                         <a href="cart.html">
                             Cart -
                             <span class="cart-amunt">{{cartTotal}}</span>
                             <i class="fa fa-shopping-cart"></i>
-                            <span class="product-count">{{cartNumber}}</span>
+                            <span class="product-count">{{cartNum}}</span>
                         </a>
                     </div>
                 </div>
@@ -616,12 +616,15 @@
             el:"#cartDetail",
             data:{
                 user:u,
+                cartTotal:0,
+                cartNum:0,
             },
             methods:{
                 init:function () {
                     var data = {
                         uid:this.user.id,
                     };
+                    var that = this;
                     $.ajax({
                         type: "GET",
                         url: "http://192.168.0.106:80/ssm/product/getIndexCart",
@@ -629,7 +632,8 @@
                         success: function(response){
                             console.log(response);
                             if (response.code == 200){
-
+                                that.cartTotal = response.data.sum;
+                                that.cartNum = response.data.num;
                             }else{
                                 console.log("获取首页购物车出错")
                             }
@@ -638,6 +642,8 @@
                             console.log("服务器失败")
                         }
                     });
+                    this.cartNum = that.cartNum;
+                    this.cartTotal = that.cartTotal;
                 }
             },
             mounted:function () {
