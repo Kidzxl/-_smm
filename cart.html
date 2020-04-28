@@ -34,6 +34,13 @@
       [v-cloak] {
           display: none;
       }
+      .btn{
+          background: none repeat scroll 0 0 #5a88ca;
+          border: medium none;
+          color: #fff;
+          padding: 11px 20px;
+          text-transform: uppercase;
+      }
   </style>
     <div class="header-area">
         <div class="container"  id="user-info"  v-cloak>
@@ -254,8 +261,8 @@
                                                     <label >total :</label>
                                                     <input type="text" v-model="total" readonly style="width: 40%;"/>元
                                                 </div>
-                                                <input type="submit" value="Update Cart" name="update_cart" class="button">
-                                                <input type="submit" value="Checkout" name="proceed" class="checkout-button button alt wc-forward">
+                                                <input type="button" value="Update Cart" name="update_cart" class="button btn">
+                                                <input type="button" value="Checkout" @click="onSubmit" name="proceed" class="btn checkout-button button alt wc-forward">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -753,15 +760,28 @@
                     }
                 },
                 calculateTotal:function (index) {
+
                     if($.inArray(index,this.alreadyList)>=0){
+                        console.log($.inArray(index,this.alreadyList));
                         this.total -= this.alreadyTotal[$.inArray(index,this.alreadyList)];
-                        this.alreadyList.splice($.inArray(index,this.alreadyList),1);
-                        this.alreadyTotal.splice($.inArray(index,this.alreadyList),1);
+                        var i = $.inArray(index,this.alreadyList);
+                        this.alreadyList.splice(i,1);
+                        this.alreadyTotal.splice(i,1);
                     }else{
                         this.total += Number($("input[type=checkbox]")[index].value);
                         this.alreadyList.push(index);
                         this.alreadyTotal.push(Number($("input[type=checkbox]")[index].value));
                     }
+                },
+                onSubmit:function () {
+                    var l = []
+                    for(var i=0; i<this.alreadyList.length;i++){
+                        var obj = this.productList[this.alreadyList[i]];
+                        l.push(obj);
+                    }
+                    l = JSON.stringify(l);
+                    $.cookie("cart",l);
+                    window.location.href="checkout.html";
                 }
             },
             mounted:function () {
