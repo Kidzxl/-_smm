@@ -78,7 +78,6 @@ public class DetailController {
         cart.setNum(num);
         cart.setPid(pid);
         detailService.insertCart(cart);
-
         HashMap<String, Object> map = new HashMap<>();
         map.put("code",200);
         map.put("data","ok");
